@@ -92,8 +92,8 @@ export default function WiFi() {
     setConnectedBluetoothDevices([
       {
         id: "bt1",
-        name: "Teensy Microcontroller",
-        type: "Microcontroller",
+        name: "Hand Barcode Scanner",
+        type: "Scanner",
       },
     ]);
 
