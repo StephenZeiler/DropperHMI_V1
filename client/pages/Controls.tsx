@@ -1,12 +1,12 @@
 import { useState } from "react";
 import AppLayout from "@/components/AppLayout";
 import { Slider } from "@/components/ui/slider";
-import { Play, Square, Zap, AlertCircle } from "lucide-react";
+import { Play, Square, Zap, Trash2 } from "lucide-react";
 
 export default function Controls() {
   const [isRunning, setIsRunning] = useState(false);
   const [speed, setSpeed] = useState([50]);
-  const [emptySlots, setEmptySlots] = useState(0);
+  const [emptying, setEmptying] = useState(false);
 
   const handleStartProduction = () => {
     setIsRunning(true);
@@ -17,11 +17,10 @@ export default function Controls() {
   };
 
   const handleEmptySlots = () => {
-    setEmptySlots((prev) => prev + 1);
-  };
-
-  const handleResetSlots = () => {
-    setEmptySlots(0);
+    setEmptying(true);
+    setTimeout(() => {
+      setEmptying(false);
+    }, 1500);
   };
 
   return (
@@ -125,34 +124,24 @@ export default function Controls() {
             </p>
           </div>
 
-          {/* Empty Slots Counter */}
-          <div className="hmi-card">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-2">
-                <AlertCircle className="w-5 h-5 text-warning" />
-                <h3 className="text-lg font-bold text-foreground">Empty Slots</h3>
-              </div>
-              <span className="text-3xl font-bold text-warning">{emptySlots}</span>
+          {/* Empty Slots Button */}
+          <button
+            onClick={handleEmptySlots}
+            disabled={emptying}
+            className={`hmi-card w-full px-8 py-8 rounded-lg transition-all border-2 ${
+              emptying
+                ? "border-warning bg-warning/20 opacity-75"
+                : "border-warning/50 hover:border-warning hover:bg-warning/10"
+            }`}
+          >
+            <div className="flex items-center justify-center gap-4 mb-4">
+              <Trash2 className="w-12 h-12 text-warning" />
+              <h3 className="text-5xl font-bold text-foreground">Empty Slots</h3>
             </div>
-            <p className="text-xs text-muted-foreground mb-4">
-              Number of empty assembly slots detected
+            <p className="text-2xl text-warning-foreground">
+              {emptying ? "Emptying..." : "Click to empty assembly slots"}
             </p>
-            <div className="flex gap-2">
-              <button
-                onClick={handleEmptySlots}
-                className="flex-1 px-4 py-2 bg-warning text-warning-foreground rounded font-semibold hover:opacity-90 transition-opacity"
-              >
-                Mark Empty Slot
-              </button>
-              <button
-                onClick={handleResetSlots}
-                disabled={emptySlots === 0}
-                className="px-4 py-2 bg-secondary border border-border rounded font-semibold hover:bg-secondary/80 transition-colors disabled:opacity-50"
-              >
-                Reset
-              </button>
-            </div>
-          </div>
+          </button>
 
           {/* Production Summary */}
           <div className="hmi-card bg-secondary/50">
@@ -171,8 +160,10 @@ export default function Controls() {
                 <span className="text-primary">{speed[0]}%</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Empty Slots:</span>
-                <span className="text-warning">{emptySlots}</span>
+                <span className="text-muted-foreground">Status:</span>
+                <span className={emptying ? "text-warning" : "text-muted-foreground"}>
+                  {emptying ? "Emptying..." : "Ready"}
+                </span>
               </div>
             </div>
           </div>
