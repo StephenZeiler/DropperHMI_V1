@@ -38,6 +38,19 @@ export default function WiFi() {
   const [password, setPassword] = useState("");
   const [connecting, setConnecting] = useState(false);
 
+  const [bluetoothEnabled, setBluetoothEnabled] = useState(true);
+  const [connectedBluetoothDevices, setConnectedBluetoothDevices] = useState<
+    ConnectedBluetoothDevice[]
+  >([]);
+  const [availableBluetoothDevices, setAvailableBluetoothDevices] = useState<
+    BluetoothDevice[]
+  >([]);
+  const [bluetoothScanning, setBluetoothScanning] = useState(false);
+  const [pairing, setPairing] = useState(false);
+  const [selectedDevice, setSelectedDevice] = useState<BluetoothDevice | null>(
+    null
+  );
+
   useEffect(() => {
     setConnectedNetwork({
       id: "main",
