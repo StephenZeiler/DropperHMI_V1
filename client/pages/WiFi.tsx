@@ -303,6 +303,148 @@ export default function WiFi() {
             </div>
           </div>
 
+          {/* Bluetooth Section */}
+          <div className="mt-8 pt-6 border-t border-border">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <h2 className="text-lg font-bold text-foreground">Bluetooth</h2>
+                <button
+                  onClick={() => setBluetoothEnabled(!bluetoothEnabled)}
+                  className={`ml-auto px-3 py-1.5 rounded text-xs font-medium transition-colors ${
+                    bluetoothEnabled
+                      ? "bg-success text-success-foreground"
+                      : "bg-secondary border border-border"
+                  }`}
+                >
+                  {bluetoothEnabled ? "Enabled" : "Disabled"}
+                </button>
+              </div>
+            </div>
+
+            {bluetoothEnabled && (
+              <div className="space-y-6">
+                {/* Connected Bluetooth Devices */}
+                {connectedBluetoothDevices.length > 0 && (
+                  <div>
+                    <h3 className="text-sm font-semibold text-foreground mb-3">
+                      Connected Devices
+                    </h3>
+                    <div className="space-y-2">
+                      {connectedBluetoothDevices.map((device) => (
+                        <div
+                          key={device.id}
+                          className="hmi-card border-success/50 bg-success/10"
+                        >
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-3 flex-1">
+                              <Bluetooth className="w-4 h-4 text-success animate-pulse" />
+                              <div>
+                                <p className="font-medium text-foreground">
+                                  {device.name}
+                                </p>
+                                <p className="text-xs text-success">
+                                  Connected
+                                </p>
+                              </div>
+                            </div>
+                            <button
+                              onClick={() => handleUnpairDevice(device.id)}
+                              className="px-3 py-1.5 rounded text-xs font-medium bg-destructive/20 text-destructive hover:bg-destructive/30 transition-colors"
+                            >
+                              Disconnect
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Available Bluetooth Devices */}
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <h3 className="text-sm font-semibold text-foreground">
+                      Available Devices
+                    </h3>
+                    <button
+                      onClick={handleBluetoothScan}
+                      disabled={bluetoothScanning}
+                      className="px-3 py-1.5 bg-secondary border border-border rounded text-xs font-medium hover:bg-secondary/80 transition-colors disabled:opacity-50 flex items-center gap-1"
+                    >
+                      {bluetoothScanning ? (
+                        <Loader className="w-3 h-3 animate-spin" />
+                      ) : (
+                        <Bluetooth className="w-3 h-3" />
+                      )}
+                      {bluetoothScanning ? "Scanning..." : "Scan"}
+                    </button>
+                  </div>
+
+                  {availableBluetoothDevices.length === 0 ? (
+                    <div className="hmi-card text-center py-6">
+                      <BluetoothOff className="w-6 h-6 mx-auto mb-2 text-muted-foreground opacity-50" />
+                      <p className="text-sm text-muted-foreground">
+                        No available devices found
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="space-y-2">
+                      {availableBluetoothDevices.map((device) => {
+                        const signalStrength = Math.max(
+                          0,
+                          Math.min(100, device.rssi + 100)
+                        );
+                        return (
+                          <div
+                            key={device.id}
+                            className="hmi-card hover:bg-secondary/70 transition-colors"
+                          >
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-3 flex-1">
+                                <Bluetooth className="w-4 h-4 text-primary" />
+                                <div className="flex-1">
+                                  <p className="font-medium text-foreground">
+                                    {device.name}
+                                  </p>
+                                  <div className="flex items-center gap-2 mt-1">
+                                    <div className="w-12 h-1.5 bg-secondary border border-border rounded-full overflow-hidden">
+                                      <div
+                                        className="h-full bg-primary"
+                                        style={{ width: `${signalStrength}%` }}
+                                      />
+                                    </div>
+                                    <span className="text-xs text-muted-foreground">
+                                      {Math.round(signalStrength)}%
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                              <button
+                                onClick={() => handlePairDevice(device)}
+                                disabled={
+                                  pairing &&
+                                  selectedDevice?.id === device.id
+                                }
+                                className="px-3 py-1.5 rounded text-xs font-medium bg-primary text-primary-foreground hover:opacity-90 transition-opacity disabled:opacity-50"
+                              >
+                                {pairing &&
+                                selectedDevice?.id === device.id ? (
+                                  <Loader className="w-3 h-3 animate-spin" />
+                                ) : (
+                                  "Pair"
+                                )}
+                              </button>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+
           {/* Password Input Modal */}
           {showPasswordInput && selectedNetwork && (
             <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
