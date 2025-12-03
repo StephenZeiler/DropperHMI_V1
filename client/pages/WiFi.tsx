@@ -187,7 +187,7 @@ export default function WiFi() {
     <AppLayout>
       {/* Header */}
       <header className="bg-secondary border-b border-border px-6 py-4 flex-shrink-0">
-        <h1 className="text-lg font-bold text-foreground">WiFi Configuration</h1>
+        <h1 className="text-lg font-bold text-foreground">WiFi / Bluetooth</h1>
         <p className="text-xs text-muted-foreground">
           Manage network connections for Raspberry Pi
         </p>
