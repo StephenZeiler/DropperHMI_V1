@@ -7,6 +7,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Logs from "./pages/Logs";
+import Controls from "./pages/Controls";
 import Assembly from "./pages/Assembly";
 import WiFi from "./pages/WiFi";
 import NotFound from "./pages/NotFound";
@@ -21,6 +22,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Logs />} />
+          <Route path="/controls" element={<Controls />} />
           <Route path="/assembly" element={<Assembly />} />
           <Route path="/wifi" element={<WiFi />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
