@@ -34,16 +34,9 @@ const DEMO_ERRORS: ErrorItem[] = [
   },
   {
     id: "4",
-    title: "Sensor Calibration Needed",
-    message: "Sensor drift detected. Run calibration routine soon.",
+    title: "Low Pipet Supply",
+    message: "Low pipet supply - slowing down machine",
     timestamp: new Date(Date.now() - 15 * 60000).toLocaleTimeString(),
-    dismissible: false,
-  },
-  {
-    id: "5",
-    title: "Component Nearing End of Life",
-    message: "Cap supply at 20% capacity. Plan for replacement.",
-    timestamp: new Date(Date.now() - 30 * 60000).toLocaleTimeString(),
     dismissible: true,
   },
 ];
