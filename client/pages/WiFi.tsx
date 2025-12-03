@@ -87,6 +87,24 @@ export default function WiFi() {
     ];
 
     setAvailableNetworks(networks);
+
+    // Initialize Bluetooth devices
+    setConnectedBluetoothDevices([
+      {
+        id: "bt1",
+        name: "Teensy Microcontroller",
+        type: "Microcontroller",
+      },
+    ]);
+
+    const bluetoothDevices: BluetoothDevice[] = [
+      { id: "btdev1", name: "Sensor Module A", rssi: -45 },
+      { id: "btdev2", name: "Sensor Module B", rssi: -55 },
+      { id: "btdev3", name: "Control Panel", rssi: -65 },
+      { id: "btdev4", name: "Wireless Switch", rssi: -72 },
+    ];
+
+    setAvailableBluetoothDevices(bluetoothDevices);
   }, []);
 
   const handleScan = () => {
@@ -122,6 +140,39 @@ export default function WiFi() {
     if (strength >= 40)
       return <WifiIcon className="w-4 h-4 text-warning" />;
     return <WifiOff className="w-4 h-4 text-destructive" />;
+  };
+
+  const handleBluetoothScan = () => {
+    setBluetoothScanning(true);
+    setTimeout(() => {
+      setBluetoothScanning(false);
+    }, 2000);
+  };
+
+  const handlePairDevice = (device: BluetoothDevice) => {
+    setSelectedDevice(device);
+    setPairing(true);
+    setTimeout(() => {
+      setConnectedBluetoothDevices((prev) => [
+        ...prev,
+        {
+          id: device.id,
+          name: device.name,
+          type: "Device",
+        },
+      ]);
+      setAvailableBluetoothDevices((prev) =>
+        prev.filter((d) => d.id !== device.id)
+      );
+      setPairing(false);
+      setSelectedDevice(null);
+    }, 1500);
+  };
+
+  const handleUnpairDevice = (deviceId: string) => {
+    setConnectedBluetoothDevices((prev) =>
+      prev.filter((d) => d.id !== deviceId)
+    );
   };
 
   const getSignalBar = (strength: number) => {
