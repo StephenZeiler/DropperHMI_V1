@@ -1,10 +1,11 @@
 import { useLocation, Link } from "react-router-dom";
-import { Activity, Cpu, Wifi, Zap } from "lucide-react";
+import { Activity, Cpu, Wifi, Zap, AlertTriangle } from "lucide-react";
 
 const navItems = [
   { path: "/", label: "Logs", icon: Activity },
   { path: "/controls", label: "Controls", icon: Zap },
   { path: "/assembly", label: "Assembly", icon: Cpu },
+  { path: "/errors", label: "Errors", icon: AlertTriangle },
   { path: "/wifi", label: "WiFi", icon: Wifi },
 ];
 
