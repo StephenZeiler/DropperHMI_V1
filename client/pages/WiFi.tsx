@@ -1,12 +1,32 @@
 import { useState, useEffect } from "react";
 import AppLayout from "@/components/AppLayout";
-import { Wifi, WifiOff, WifiIcon, Loader, Lock } from "lucide-react";
+import {
+  Wifi,
+  WifiOff,
+  WifiIcon,
+  Loader,
+  Lock,
+  Bluetooth,
+  BluetoothOff,
+} from "lucide-react";
 
 interface Network {
   ssid: string;
   strength: number;
   secured: boolean;
   id: string;
+}
+
+interface BluetoothDevice {
+  id: string;
+  name: string;
+  rssi: number;
+}
+
+interface ConnectedBluetoothDevice {
+  id: string;
+  name: string;
+  type: string;
 }
 
 export default function WiFi() {
