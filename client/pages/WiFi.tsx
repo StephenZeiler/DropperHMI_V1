@@ -97,14 +97,7 @@ export default function WiFi() {
       },
     ]);
 
-    const bluetoothDevices: BluetoothDevice[] = [
-      { id: "btdev1", name: "Sensor Module A", rssi: -45 },
-      { id: "btdev2", name: "Sensor Module B", rssi: -55 },
-      { id: "btdev3", name: "Control Panel", rssi: -65 },
-      { id: "btdev4", name: "Wireless Switch", rssi: -72 },
-    ];
-
-    setAvailableBluetoothDevices(bluetoothDevices);
+    setAvailableBluetoothDevices([]);
   }, []);
 
   const handleScan = () => {
