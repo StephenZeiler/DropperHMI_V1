@@ -1,19 +1,26 @@
 import { useState } from "react";
 import AppLayout from "@/components/AppLayout";
 import { Slider } from "@/components/ui/slider";
-import { Play, Square, Zap, Trash2 } from "lucide-react";
+import { Play, Pause, Square, Zap, Trash2 } from "lucide-react";
 
 export default function Controls() {
   const [isRunning, setIsRunning] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
   const [speed, setSpeed] = useState([50]);
   const [emptying, setEmptying] = useState(false);
 
   const handleStartProduction = () => {
     setIsRunning(true);
+    setIsPaused(false);
+  };
+
+  const handlePauseProduction = () => {
+    setIsPaused(!isPaused);
   };
 
   const handleEndProduction = () => {
     setIsRunning(false);
+    setIsPaused(false);
   };
 
   const handleEmptySlots = () => {
@@ -39,30 +46,44 @@ export default function Controls() {
           {/* Status Indicator */}
           <div
             className={`hmi-card border-2 ${
-              isRunning ? "border-success bg-success/10" : "border-muted bg-muted/5"
+              isRunning
+                ? isPaused
+                  ? "border-warning bg-warning/10"
+                  : "border-success bg-success/10"
+                : "border-muted bg-muted/5"
             }`}
           >
             <div className="flex items-center gap-3">
               <div
                 className={`w-4 h-4 rounded-full ${
-                  isRunning ? "bg-success animate-pulse" : "bg-muted"
+                  isRunning
+                    ? isPaused
+                      ? "bg-warning"
+                      : "bg-success animate-pulse"
+                    : "bg-muted"
                 }`}
               />
               <div>
                 <p className="font-semibold text-foreground">
-                  {isRunning ? "Production Running" : "Production Stopped"}
+                  {isRunning
+                    ? isPaused
+                      ? "Production Paused"
+                      : "Production Running"
+                    : "Production Stopped"}
                 </p>
                 <p className="text-xs text-muted-foreground">
                   {isRunning
-                    ? "Assembly line is actively running"
+                    ? isPaused
+                      ? "Paused - Ready to resume"
+                      : "Assembly line is actively running"
                     : "Ready to start production"}
                 </p>
               </div>
             </div>
           </div>
 
-          {/* Start/Stop Controls */}
-          <div className="grid grid-cols-2 gap-4">
+          {/* Start/Pause/Stop Controls */}
+          <div className="grid grid-cols-3 gap-4">
             <button
               onClick={handleStartProduction}
               disabled={isRunning}
@@ -77,7 +98,27 @@ export default function Controls() {
                 <h3 className="text-lg font-bold text-foreground">Start</h3>
               </div>
               <p className="text-xs text-muted-foreground text-center">
-                Begin production run
+                Begin production
+              </p>
+            </button>
+
+            <button
+              onClick={handlePauseProduction}
+              disabled={!isRunning}
+              className={`hmi-card px-6 py-4 rounded-lg transition-all border-2 ${
+                !isRunning
+                  ? "border-warning/30 bg-warning/5 opacity-60 cursor-not-allowed"
+                  : isPaused
+                    ? "border-warning/50 bg-warning/20 hover:border-warning"
+                    : "border-warning/50 hover:border-warning hover:bg-warning/10"
+              }`}
+            >
+              <div className="flex items-center justify-center gap-3 mb-2">
+                <Pause className="w-6 h-6 text-warning" fill="currentColor" />
+                <h3 className="text-lg font-bold text-foreground">Pause</h3>
+              </div>
+              <p className="text-xs text-muted-foreground text-center">
+                {isPaused ? "Paused" : "Pause run"}
               </p>
             </button>
 
@@ -115,7 +156,6 @@ export default function Controls() {
               max={100}
               step={1}
               className="w-full"
-              disabled={!isRunning}
             />
             <p className="text-xs text-muted-foreground mt-3">
               {speed[0] < 33 && "Slow speed - Precision mode"}
@@ -161,8 +201,20 @@ export default function Controls() {
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Status:</span>
-                <span className={emptying ? "text-warning" : "text-muted-foreground"}>
-                  {emptying ? "Emptying..." : "Ready"}
+                <span
+                  className={
+                    isRunning
+                      ? isPaused
+                        ? "text-warning"
+                        : "text-success"
+                      : "text-muted-foreground"
+                  }
+                >
+                  {isRunning
+                    ? isPaused
+                      ? "Paused"
+                      : "Running"
+                    : "Stopped"}
                 </span>
               </div>
             </div>
