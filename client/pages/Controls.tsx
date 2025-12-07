@@ -151,3 +151,5 @@ function ControlsPage() {
     </AppLayout>
   );
 }
+
+export default memo(ControlsPage);
