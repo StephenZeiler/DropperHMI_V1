@@ -19,7 +19,7 @@ export const getWifiNetworks: RequestHandler = async (req, res) => {
   try {
     const { stdout } = await execAsync(
       "nmcli -t -f SSID,SIGNAL,SECURITY device wifi list 2>/dev/null || echo ''",
-      { timeout: 10000 }
+      { timeout: 10000 },
     );
 
     const networks: WifiNetwork[] = [];
@@ -62,12 +62,12 @@ export const getCurrentNetwork: RequestHandler = async (req, res) => {
   try {
     const { stdout: activeOutput } = await execAsync(
       "nmcli -t -f NAME,DEVICE connection show --active 2>/dev/null | grep wifi || echo ''",
-      { timeout: 5000 }
+      { timeout: 5000 },
     );
 
     const { stdout: deviceOutput } = await execAsync(
       "nmcli -t -f SSID,SIGNAL device wifi list 2>/dev/null | head -1 || echo ''",
-      { timeout: 5000 }
+      { timeout: 5000 },
     );
 
     let ssid: string | null = null;
@@ -81,7 +81,8 @@ export const getCurrentNetwork: RequestHandler = async (req, res) => {
     if (deviceOutput.trim()) {
       const parts = deviceOutput.trim().split(":");
       if (parts[0]) ssid = parts[0].trim();
-      if (parts[1]) strength = Math.min(100, Math.max(0, parseInt(parts[1]) || 0));
+      if (parts[1])
+        strength = Math.min(100, Math.max(0, parseInt(parts[1]) || 0));
     }
 
     res.json({
@@ -134,7 +135,8 @@ export const connectToNetwork: RequestHandler = async (req, res) => {
     });
   } catch (error) {
     console.error("Error connecting to WiFi:", error);
-    const errorMessage = error instanceof Error ? error.message : "Unknown error";
+    const errorMessage =
+      error instanceof Error ? error.message : "Unknown error";
     res.status(500).json({
       error: "Connection failed",
       details: errorMessage,

@@ -1,13 +1,6 @@
 import { useState, useEffect, memo } from "react";
 import AppLayout from "@/components/AppLayout";
-import {
-  Wifi,
-  WifiOff,
-  WifiIcon,
-  Loader,
-  Lock,
-  RefreshCw,
-} from "lucide-react";
+import { Wifi, WifiOff, WifiIcon, Loader, Lock, RefreshCw } from "lucide-react";
 
 interface Network {
   ssid: string;
@@ -16,7 +9,9 @@ interface Network {
 }
 
 function WiFiPage() {
-  const [connectedNetwork, setConnectedNetwork] = useState<Network | null>(null);
+  const [connectedNetwork, setConnectedNetwork] = useState<Network | null>(
+    null,
+  );
   const [availableNetworks, setAvailableNetworks] = useState<Network[]>([]);
   const [scanning, setScanning] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -35,8 +30,14 @@ function WiFiPage() {
     setError("");
     try {
       const [currentRes, networksRes] = await Promise.all([
-        fetch("/api/wifi/current").catch(() => ({ ok: false, json: async () => ({}) })),
-        fetch("/api/wifi/networks").catch(() => ({ ok: false, json: async () => ({ networks: [] }) })),
+        fetch("/api/wifi/current").catch(() => ({
+          ok: false,
+          json: async () => ({}),
+        })),
+        fetch("/api/wifi/networks").catch(() => ({
+          ok: false,
+          json: async () => ({ networks: [] }),
+        })),
       ]);
 
       if (currentRes.ok) {
@@ -91,7 +92,10 @@ function WiFiPage() {
       const response = await fetch("/api/wifi/connect", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ssid: network.ssid, password: pwd || undefined }),
+        body: JSON.stringify({
+          ssid: network.ssid,
+          password: pwd || undefined,
+        }),
       });
 
       if (!response.ok) {
@@ -182,7 +186,9 @@ function WiFiPage() {
           {/* Available Networks */}
           <div>
             <div className="flex items-center justify-between mb-1">
-              <h3 className="text-xs font-semibold text-foreground">Available</h3>
+              <h3 className="text-xs font-semibold text-foreground">
+                Available
+              </h3>
               <button
                 onClick={handleScan}
                 disabled={scanning || loading}
@@ -200,12 +206,16 @@ function WiFiPage() {
             {loading ? (
               <div className="hmi-card p-3 text-center">
                 <Loader className="w-4 h-4 animate-spin mx-auto mb-2" />
-                <p className="text-xs text-muted-foreground">Loading networks...</p>
+                <p className="text-xs text-muted-foreground">
+                  Loading networks...
+                </p>
               </div>
             ) : availableNetworks.length === 0 ? (
               <div className="hmi-card p-3 text-center">
                 <WifiOff className="w-5 h-5 mx-auto mb-1 text-muted-foreground opacity-50" />
-                <p className="text-xs text-muted-foreground">No networks found</p>
+                <p className="text-xs text-muted-foreground">
+                  No networks found
+                </p>
               </div>
             ) : (
               <div className="space-y-1">
@@ -300,9 +310,7 @@ function WiFiPage() {
                 Cancel
               </button>
               <button
-                onClick={() =>
-                  handleConnect(selectedNetwork, password)
-                }
+                onClick={() => handleConnect(selectedNetwork, password)}
                 disabled={!password || connecting}
                 className="flex-1 px-3 py-2 bg-primary text-primary-foreground rounded text-sm font-medium hover:opacity-90 transition-opacity disabled:opacity-50"
               >

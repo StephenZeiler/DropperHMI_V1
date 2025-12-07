@@ -50,13 +50,13 @@ const LogEntry = memo(({ log, index }: { log: LogEntry; index: number }) => (
       <span className="text-muted-foreground flex-shrink-0 w-16">
         {log.timestamp}
       </span>
-      <div className="flex-shrink-0 mt-0.5">
-        {getLogIcon(log.level)}
-      </div>
+      <div className="flex-shrink-0 mt-0.5">{getLogIcon(log.level)}</div>
       <span className={`flex-shrink-0 w-11 ${getLogColor(log.level)}`}>
         [{log.level.toUpperCase().slice(0, 3)}]
       </span>
-      <span className="text-foreground break-words line-clamp-1">{log.message}</span>
+      <span className="text-foreground break-words line-clamp-1">
+        {log.message}
+      </span>
     </div>
   </div>
 ));
@@ -98,11 +98,7 @@ function LogsPanelContent({
           <div className="p-4 text-muted-foreground text-center h-full flex items-center justify-center text-xs">
             <div>
               <Info className="w-6 h-6 mx-auto mb-2 opacity-50" />
-              <p>
-                {isConnected
-                  ? "Waiting for logs..."
-                  : "Not connected"}
-              </p>
+              <p>{isConnected ? "Waiting for logs..." : "Not connected"}</p>
             </div>
           </div>
         ) : (

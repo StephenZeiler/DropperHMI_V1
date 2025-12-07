@@ -95,7 +95,10 @@ function LogsPage() {
     const memoryInterval = setInterval(() => {
       setSystemStatus((prev) => ({
         ...prev,
-        memoryUsage: Math.max(20, Math.min(80, prev.memoryUsage + (Math.random() - 0.5) * 5)),
+        memoryUsage: Math.max(
+          20,
+          Math.min(80, prev.memoryUsage + (Math.random() - 0.5) * 5),
+        ),
       }));
     }, 3000);
 
