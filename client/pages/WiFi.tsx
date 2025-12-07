@@ -513,3 +513,5 @@ function WiFiPage() {
     </AppLayout>
   );
 }
+
+export default memo(WiFiPage);
