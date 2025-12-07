@@ -188,15 +188,36 @@ export default function WiFi() {
   return (
     <AppLayout>
       {/* Header */}
-      <header className="bg-secondary border-b border-border px-6 py-4 flex-shrink-0">
-        <h1 className="text-lg font-bold text-foreground">WiFi / Bluetooth</h1>
-        <p className="text-xs text-muted-foreground">
-          Manage network connections for Raspberry Pi
-        </p>
+      <header className="bg-secondary border-b border-border px-3 py-2 flex-shrink-0">
+        <h1 className="text-base font-bold text-foreground">WiFi / Bluetooth</h1>
       </header>
 
+      {/* Tabs */}
+      <div className="flex gap-2 px-3 py-2 border-b border-border bg-secondary/30 flex-shrink-0">
+        <button
+          onClick={() => setActiveTab("wifi")}
+          className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
+            activeTab === "wifi"
+              ? "bg-primary text-primary-foreground"
+              : "bg-secondary border border-border hover:bg-secondary/80"
+          }`}
+        >
+          WiFi
+        </button>
+        <button
+          onClick={() => setActiveTab("bluetooth")}
+          className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
+            activeTab === "bluetooth"
+              ? "bg-primary text-primary-foreground"
+              : "bg-secondary border border-border hover:bg-secondary/80"
+          }`}
+        >
+          Bluetooth
+        </button>
+      </div>
+
       {/* Main Content */}
-      <div className="flex-1 overflow-y-auto p-6">
+      <div className="flex-1 overflow-y-auto p-3">
         <div className="max-w-2xl">
           {/* Connected Network */}
           {connectedNetwork && (
