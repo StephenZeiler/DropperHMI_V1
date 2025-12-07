@@ -168,3 +168,5 @@ function LogsPage() {
     </AppLayout>
   );
 }
+
+export default memo(LogsPage);
