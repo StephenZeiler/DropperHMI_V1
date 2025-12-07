@@ -2,6 +2,12 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import { handleDemo } from "./routes/demo";
+import {
+  getWifiNetworks,
+  getCurrentNetwork,
+  connectToNetwork,
+  disconnectNetwork,
+} from "./routes/wifi";
 
 export function createServer() {
   const app = express();
@@ -18,6 +24,12 @@ export function createServer() {
   });
 
   app.get("/api/demo", handleDemo);
+
+  // WiFi API routes
+  app.get("/api/wifi/networks", getWifiNetworks);
+  app.get("/api/wifi/current", getCurrentNetwork);
+  app.post("/api/wifi/connect", connectToNetwork);
+  app.post("/api/wifi/disconnect", disconnectNetwork);
 
   return app;
 }
