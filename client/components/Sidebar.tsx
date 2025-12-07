@@ -6,7 +6,7 @@ const navItems = [
   { path: "/controls", label: "Controls", icon: Zap },
   { path: "/assembly", label: "Assembly", icon: Cpu },
   { path: "/errors", label: "Errors", icon: AlertTriangle },
-  { path: "/wifi", label: "WiFi / Bluetooth", icon: Wifi },
+  { path: "/wifi", label: "WiFi", icon: Wifi },
 ];
 
 export default function Sidebar() {
