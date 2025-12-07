@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, memo } from "react";
 import LogsPanel, { LogEntry } from "@/components/LogsPanel";
 import AppLayout from "@/components/AppLayout";
 import { RotateCcw, Trash2, Settings } from "lucide-react";
 
-export default function Logs() {
+function LogsPage() {
   const [logs, setLogs] = useState<LogEntry[]>([]);
   const [isConnected, setIsConnected] = useState(false);
   const [systemStatus, setSystemStatus] = useState({
