@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { memo } from "react";
+import { useEffect, useState, memo } from "react";
 import LogsPanel, { LogEntry } from "@/components/LogsPanel";
 import AppLayout from "@/components/AppLayout";
 import { RotateCcw, Trash2, Settings } from "lucide-react";
