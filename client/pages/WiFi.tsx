@@ -29,7 +29,7 @@ interface ConnectedBluetoothDevice {
   type: string;
 }
 
-export default function WiFi() {
+function WiFiPage() {
   const [connectedNetwork, setConnectedNetwork] = useState<Network | null>(null);
   const [availableNetworks, setAvailableNetworks] = useState<Network[]>([]);
   const [scanning, setScanning] = useState(false);
