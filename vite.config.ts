@@ -5,7 +5,7 @@ import { createServer } from "./server";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: "./",  // <-- REQUIRED FOR LOCAL FILE:// KIOSK MODE
+  base: "./", // <-- REQUIRED FOR LOCAL FILE:// KIOSK MODE
   server: {
     host: "::",
     port: 8080,
