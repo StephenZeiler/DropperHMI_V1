@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 import AppLayout from "@/components/AppLayout";
 import {
   Wifi,
@@ -8,6 +8,7 @@ import {
   Lock,
   Bluetooth,
   BluetoothOff,
+  ChevronDown,
 } from "lucide-react";
 
 interface Network {
