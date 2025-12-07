@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, memo } from "react";
 import AppLayout from "@/components/AppLayout";
 import { Slider } from "@/components/ui/slider";
 import { Play, Pause, Square, Zap, Trash2 } from "lucide-react";
 
-export default function Controls() {
+function ControlsPage() {
   const [isRunning, setIsRunning] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [speed, setSpeed] = useState([50]);
