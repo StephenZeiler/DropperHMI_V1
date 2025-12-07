@@ -51,6 +51,7 @@ export default function WiFi() {
   const [selectedDevice, setSelectedDevice] = useState<BluetoothDevice | null>(
     null
   );
+  const [activeTab, setActiveTab] = useState<"wifi" | "bluetooth">("wifi");
 
   useEffect(() => {
     setConnectedNetwork({
