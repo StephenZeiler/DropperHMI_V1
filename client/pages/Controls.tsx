@@ -135,15 +135,15 @@ function ControlsPage() {
         <button
           onClick={handleEmptySlots}
           disabled={emptying}
-          className={`hmi-card w-full px-3 py-3 rounded transition-all border-2 flex flex-col items-center justify-center flex-1 ${
+          className={`hmi-card px-3 py-2 rounded transition-all border-2 flex flex-col items-center justify-center ${
             emptying
               ? "border-warning bg-warning/20 opacity-75"
               : "border-warning/50 hover:border-warning hover:bg-warning/10"
           }`}
         >
-          <Trash2 className="w-8 h-8 text-warning mb-1 flex-shrink-0" />
-          <h3 className="text-2xl font-bold text-foreground">Empty Slots</h3>
-          <p className="text-xs text-warning-foreground mt-1">
+          <Trash2 className="w-5 h-5 text-warning mb-1 flex-shrink-0" />
+          <h3 className="text-sm font-bold text-foreground">Empty Slots</h3>
+          <p className="text-xs text-warning-foreground mt-0.5">
             {emptying ? "Emptying..." : "Click to empty"}
           </p>
         </button>
