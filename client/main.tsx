@@ -1,7 +1,7 @@
 import "./global.css";
 
 import { Toaster } from "@/components/ui/toaster";
-import { createRoot, Root } from "react-dom/client";
+import { createRoot } from "react-dom/client";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -38,16 +38,18 @@ const App = () => (
   </QueryClientProvider>
 );
 
+// Declare a global to store the root reference
+declare global {
+  interface Window {
+    __root?: ReturnType<typeof createRoot>;
+  }
+}
+
 const container = document.getElementById("root");
 if (container) {
-  try {
-    createRoot(container).render(<App />);
-  } catch (e) {
-    // If root already exists (HMR case), this is expected
-    if ((e as Error).message?.includes("already been passed to createRoot")) {
-      // Silently ignore - the app is already running
-    } else {
-      throw e;
-    }
+  // Reuse existing root for HMR or create new one
+  if (!window.__root) {
+    window.__root = createRoot(container);
   }
+  window.__root.render(<App />);
 }
