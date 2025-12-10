@@ -7,13 +7,15 @@ interface UnsavedChangesContextType {
   setPendingNavigation: (path: string | null) => void;
 }
 
-const UnsavedChangesContext = createContext<UnsavedChangesContextType | undefined>(
-  undefined
-);
+const UnsavedChangesContext = createContext<
+  UnsavedChangesContextType | undefined
+>(undefined);
 
 export function UnsavedChangesProvider({ children }: { children: ReactNode }) {
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
-  const [pendingNavigation, setPendingNavigation] = useState<string | null>(null);
+  const [pendingNavigation, setPendingNavigation] = useState<string | null>(
+    null,
+  );
 
   const value: UnsavedChangesContextType = {
     hasUnsavedChanges,
@@ -33,7 +35,7 @@ export function useUnsavedChanges() {
   const context = useContext(UnsavedChangesContext);
   if (!context) {
     throw new Error(
-      "useUnsavedChanges must be used within UnsavedChangesProvider"
+      "useUnsavedChanges must be used within UnsavedChangesProvider",
     );
   }
   return context;

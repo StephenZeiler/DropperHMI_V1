@@ -72,11 +72,12 @@ export default function Assembly() {
   const [savedConfig, setSavedConfig] = useState<AssemblyConfig>(initialConfig);
   const [lastSaved, setLastSaved] = useState<string>("");
   const [calibrationDialogOpen, setCalibrationDialogOpen] = useState(false);
-  const [unsavedChangesDialogOpen, setUnsavedChangesDialogOpen] = useState(false);
+  const [unsavedChangesDialogOpen, setUnsavedChangesDialogOpen] =
+    useState(false);
 
   const handleConfigChange = (
     component: keyof AssemblyConfig,
-    value: string
+    value: string,
   ) => {
     setConfig((prev) => ({ ...prev, [component]: value }));
   };
@@ -140,7 +141,7 @@ export default function Assembly() {
 
   const getOptionLabel = (
     type: "pipets" | "caps" | "bulbs",
-    id: string
+    id: string,
   ): string => {
     const option = ASSEMBLY_OPTIONS[type].find((opt) => opt.id === id);
     return option?.label || "Unknown";
@@ -150,7 +151,9 @@ export default function Assembly() {
     <AppLayout>
       {/* Header */}
       <header className="bg-secondary border-b border-border px-6 py-4 flex-shrink-0">
-        <h1 className="text-lg font-bold text-foreground">Assembly Configuration</h1>
+        <h1 className="text-lg font-bold text-foreground">
+          Assembly Configuration
+        </h1>
         <p className="text-xs text-muted-foreground">
           Select components for dropper assembly
         </p>
@@ -180,8 +183,10 @@ export default function Assembly() {
                   ))}
                 </select>
                 <p className="text-xs text-muted-foreground mt-2">
-                  {ASSEMBLY_OPTIONS.pipets.find((p) => p.id === config.pipet)
-                    ?.description}
+                  {
+                    ASSEMBLY_OPTIONS.pipets.find((p) => p.id === config.pipet)
+                      ?.description
+                  }
                 </p>
               </div>
 
@@ -202,8 +207,10 @@ export default function Assembly() {
                   ))}
                 </select>
                 <p className="text-xs text-muted-foreground mt-2">
-                  {ASSEMBLY_OPTIONS.caps.find((c) => c.id === config.cap)
-                    ?.description}
+                  {
+                    ASSEMBLY_OPTIONS.caps.find((c) => c.id === config.cap)
+                      ?.description
+                  }
                 </p>
               </div>
 
@@ -224,8 +231,10 @@ export default function Assembly() {
                   ))}
                 </select>
                 <p className="text-xs text-muted-foreground mt-2">
-                  {ASSEMBLY_OPTIONS.bulbs.find((b) => b.id === config.bulb)
-                    ?.description}
+                  {
+                    ASSEMBLY_OPTIONS.bulbs.find((b) => b.id === config.bulb)
+                      ?.description
+                  }
                 </p>
               </div>
             </div>
@@ -306,7 +315,10 @@ export default function Assembly() {
       />
 
       {/* Unsaved Changes Dialog */}
-      <Dialog open={unsavedChangesDialogOpen} onOpenChange={setUnsavedChangesDialogOpen}>
+      <Dialog
+        open={unsavedChangesDialogOpen}
+        onOpenChange={setUnsavedChangesDialogOpen}
+      >
         <DialogContent className="max-w-md">
           <DialogHeader>
             <div className="flex items-center gap-3">
@@ -314,8 +326,8 @@ export default function Assembly() {
               <DialogTitle>Unsaved Changes</DialogTitle>
             </div>
             <DialogDescription className="mt-2">
-              You have made changes to the assembly configuration that haven't been saved.
-              Would you like to save them before leaving?
+              You have made changes to the assembly configuration that haven't
+              been saved. Would you like to save them before leaving?
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="gap-3 flex-row">

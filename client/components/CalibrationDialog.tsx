@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { RotateCcw, Save, Plus, Minus, Droplet } from "lucide-react";
 
@@ -50,7 +56,7 @@ export default function CalibrationDialog({
   const handleSample = () => {
     console.log(
       `Sending sample command to Teensy: ${dropperCount} droppers with calibration:`,
-      calibration
+      calibration,
     );
     // TODO: Send command to Teensy when backend is set up
   };
@@ -58,12 +64,10 @@ export default function CalibrationDialog({
   const renderNumberControl = (
     label: string,
     axis: keyof typeof DEFAULT_CALIBRATION,
-    value: number
+    value: number,
   ) => (
     <div className="space-y-4 p-4 bg-secondary/30 rounded border border-border">
-      <label className="text-base font-semibold text-foreground">
-        {label}
-      </label>
+      <label className="text-base font-semibold text-foreground">{label}</label>
       <div className="flex items-center justify-center gap-6">
         <button
           onClick={() => handleDecrement(axis)}
@@ -101,21 +105,21 @@ export default function CalibrationDialog({
             {renderNumberControl(
               "Pipet RAM Distance Travel in Millimeter",
               "xAxis",
-              calibration.xAxis
+              calibration.xAxis,
             )}
 
             {/* Cap RAM Calibration */}
             {renderNumberControl(
               "Cap RAM Distance Travel in Millimeter",
               "yAxis",
-              calibration.yAxis
+              calibration.yAxis,
             )}
 
             {/* Bulb RAM Calibration */}
             {renderNumberControl(
               "Bulb RAM Distance Travel in Millimeter",
               "zAxis",
-              calibration.zAxis
+              calibration.zAxis,
             )}
           </div>
 
