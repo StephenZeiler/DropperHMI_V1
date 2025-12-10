@@ -52,14 +52,19 @@ const ASSEMBLY_OPTIONS = {
 };
 
 export default function Assembly() {
-  const [config, setConfig] = useState<AssemblyConfig>({
+  const initialConfig: AssemblyConfig = {
     pipet: ASSEMBLY_OPTIONS.pipets[0].id,
     cap: ASSEMBLY_OPTIONS.caps[0].id,
     bulb: ASSEMBLY_OPTIONS.bulbs[0].id,
-  });
+  };
 
+  const [config, setConfig] = useState<AssemblyConfig>(initialConfig);
+  const [savedConfig, setSavedConfig] = useState<AssemblyConfig>(initialConfig);
   const [lastSaved, setLastSaved] = useState<string>("");
   const [calibrationDialogOpen, setCalibrationDialogOpen] = useState(false);
+  const [unsavedChangesDialogOpen, setUnsavedChangesDialogOpen] = useState(false);
+  const [pendingNavigation, setPendingNavigation] = useState<() => void | null>(null);
+  const hasChanges = useRef(false);
 
   const handleConfigChange = (
     component: keyof AssemblyConfig,
