@@ -51,6 +51,7 @@ export default function Assembly() {
   });
 
   const [lastSaved, setLastSaved] = useState<string>("");
+  const [calibrationDialogOpen, setCalibrationDialogOpen] = useState(false);
 
   const handleConfigChange = (
     component: keyof AssemblyConfig,
