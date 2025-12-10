@@ -154,14 +154,14 @@ export default function CalibrationDialog({
             title="Reset to defaults"
           >
             <RotateCcw className="w-5 h-5" />
-            Reset to Default
+            Reset Default
           </button>
           <button
             onClick={handleSave}
-            className="px-6 py-3 bg-primary text-primary-foreground rounded font-bold hover:opacity-90 transition-opacity flex items-center justify-center gap-2 text-base"
+            className="flex-1 px-6 py-3 bg-primary text-primary-foreground rounded font-bold hover:opacity-90 transition-opacity flex items-center justify-center gap-2 text-base"
           >
             <Save className="w-5 h-5" />
-            Save
+            Save and Exit
           </button>
         </DialogFooter>
       </DialogContent>
