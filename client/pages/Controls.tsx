@@ -70,11 +70,11 @@ function ControlsPage() {
         </div>
 
         {/* Start/Pause/Stop Controls */}
-        <div className="grid grid-cols-3 gap-6 flex-shrink-0">
+        <div className="grid grid-cols-3 gap-4 flex-shrink-0">
           <button
             onClick={handleStartProduction}
             disabled={isRunning && !isPaused}
-            className={`hmi-card px-6 py-12 rounded transition-all border-2 flex flex-col items-center justify-center ${
+            className={`hmi-card px-6 py-8 rounded transition-all border-2 flex flex-col items-center justify-center ${
               isRunning && !isPaused
                 ? "border-success/50 bg-success/20 opacity-60 cursor-not-allowed"
                 : "border-primary/50 hover:border-primary hover:bg-primary/10"
@@ -92,7 +92,7 @@ function ControlsPage() {
           <button
             onClick={handlePauseProduction}
             disabled={!isRunning}
-            className={`hmi-card px-6 py-12 rounded transition-all border-2 flex flex-col items-center justify-center ${
+            className={`hmi-card px-6 py-8 rounded transition-all border-2 flex flex-col items-center justify-center ${
               !isRunning
                 ? "border-warning/30 bg-warning/5 opacity-60 cursor-not-allowed"
                 : isPaused
@@ -110,7 +110,7 @@ function ControlsPage() {
           <button
             onClick={handleEndProduction}
             disabled={!isRunning}
-            className={`hmi-card px-6 py-12 rounded transition-all border-2 flex flex-col items-center justify-center ${
+            className={`hmi-card px-6 py-8 rounded transition-all border-2 flex flex-col items-center justify-center ${
               !isRunning
                 ? "border-destructive/30 bg-destructive/5 opacity-60 cursor-not-allowed"
                 : "border-destructive/50 hover:border-destructive hover:bg-destructive/10"
@@ -146,7 +146,7 @@ function ControlsPage() {
         <button
           onClick={handleEmptySlots}
           disabled={emptying}
-          className={`hmi-card px-8 py-10 rounded transition-all border-2 flex flex-col items-center justify-center ${
+          className={`hmi-card px-8 py-6 rounded transition-all border-2 flex flex-col items-center justify-center ${
             emptying
               ? "border-warning bg-warning/20 opacity-75"
               : "border-warning/50 hover:border-warning hover:bg-warning/10"

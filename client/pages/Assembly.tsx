@@ -163,9 +163,9 @@ export default function Assembly() {
       <div className="flex-1 overflow-y-auto p-6">
         <div className="max-w-6xl">
           {/* Configuration Layout - Two Columns */}
-          <div className="grid grid-cols-3 gap-6 mb-8">
+          <div className="grid grid-cols-3 gap-4 mb-4">
             {/* Left Column - Selection Cards */}
-            <div className="col-span-2 space-y-6">
+            <div className="col-span-2 space-y-4">
               {/* Pipets Section */}
               <div className="hmi-card">
                 <h2 className="text-sm font-semibold text-foreground mb-3">
@@ -240,7 +240,7 @@ export default function Assembly() {
             </div>
 
             {/* Right Column - Current Configuration & Calibration */}
-            <div className="col-span-1 space-y-4">
+            <div className="col-span-1 space-y-3">
               {/* Current Configuration Summary */}
               <div className="hmi-card bg-secondary/50 border-primary/50">
                 <h3 className="text-sm font-semibold text-foreground mb-3">
