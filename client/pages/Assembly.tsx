@@ -60,7 +60,6 @@ export default function Assembly() {
     setHasUnsavedChanges,
     pendingNavigation,
     setPendingNavigation,
-    setOnSaveAndNavigate,
   } = useUnsavedChanges();
 
   const initialConfig: AssemblyConfig = {
