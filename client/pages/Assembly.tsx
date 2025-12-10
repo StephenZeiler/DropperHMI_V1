@@ -109,17 +109,6 @@ export default function Assembly() {
     }
   }, [pendingNavigation, hasUnsavedChanges]);
 
-  // Set up save and navigate callback
-  useEffect(() => {
-    setOnSaveAndNavigate(() => {
-      handleSave();
-      if (pendingNavigation) {
-        navigate(pendingNavigation);
-      }
-      setPendingNavigation(null);
-    });
-  }, [pendingNavigation, navigate, setOnSaveAndNavigate]);
-
   const handleSave = useCallback(() => {
     setSavedConfig(config);
     setLastSaved(new Date().toLocaleTimeString());
