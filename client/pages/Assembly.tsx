@@ -53,6 +53,9 @@ const ASSEMBLY_OPTIONS = {
 };
 
 export default function Assembly() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const initialConfig: AssemblyConfig = {
     pipet: ASSEMBLY_OPTIONS.pipets[0].id,
     cap: ASSEMBLY_OPTIONS.caps[0].id,
@@ -64,8 +67,8 @@ export default function Assembly() {
   const [lastSaved, setLastSaved] = useState<string>("");
   const [calibrationDialogOpen, setCalibrationDialogOpen] = useState(false);
   const [unsavedChangesDialogOpen, setUnsavedChangesDialogOpen] = useState(false);
-  const [pendingNavigation, setPendingNavigation] = useState<() => void | null>(null);
-  const hasChanges = useRef(false);
+  const [pendingPath, setPendingPath] = useState<string | null>(null);
+  const hasChangesRef = useRef(false);
 
   const handleConfigChange = (
     component: keyof AssemblyConfig,
