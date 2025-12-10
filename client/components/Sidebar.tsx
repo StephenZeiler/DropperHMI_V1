@@ -1,4 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
+import { useUnsavedChanges } from "@/context/UnsavedChangesContext";
 import { Activity, Cpu, Wifi, Zap, AlertTriangle } from "lucide-react";
 
 const navItems = [
@@ -12,22 +13,17 @@ const navItems = [
 export default function Sidebar() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { hasUnsavedChanges, setPendingNavigation } = useUnsavedChanges();
 
   const handleNavClick = (path: string) => {
-    // Check if Assembly page has unsaved changes
-    if (location.pathname === "/assembly") {
-      const hasUnsavedChanges = (window as any).__assemblyHasUnsavedChanges;
-      const showDialog = (window as any).__assemblyShowUnsavedDialog;
-
-      if (hasUnsavedChanges && showDialog) {
-        // Set the pending path and show the dialog
-        (window as any).__assemblySetPendingPath(path);
-        showDialog();
-        return;
-      }
+    // Only check unsaved changes when leaving the Assembly page
+    if (location.pathname === "/assembly" && hasUnsavedChanges) {
+      // Set pending navigation to show the unsaved changes dialog
+      setPendingNavigation(path);
+      return;
     }
 
-    // Navigate normally if no unsaved changes
+    // Navigate normally if no unsaved changes or not on Assembly page
     navigate(path);
   };
 
