@@ -139,7 +139,7 @@ export default function CalibrationDialog({
             </div>
             <button
               onClick={handleSample}
-              className="w-full px-6 py-4 bg-success text-white rounded font-bold hover:opacity-90 transition-opacity flex items-center justify-center gap-2 text-lg"
+              className="px-6 py-4 bg-yellow-500 text-black rounded font-bold hover:opacity-90 transition-opacity flex items-center justify-center gap-2 text-lg mx-auto"
             >
               <Droplet className="w-6 h-6" />
               Sample
