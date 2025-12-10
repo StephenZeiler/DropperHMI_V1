@@ -55,7 +55,13 @@ const ASSEMBLY_OPTIONS = {
 
 export default function Assembly() {
   const navigate = useNavigate();
-  const location = useLocation();
+  const {
+    hasUnsavedChanges,
+    setHasUnsavedChanges,
+    pendingNavigation,
+    setPendingNavigation,
+    setOnSaveAndNavigate,
+  } = useUnsavedChanges();
 
   const initialConfig: AssemblyConfig = {
     pipet: ASSEMBLY_OPTIONS.pipets[0].id,
@@ -68,8 +74,6 @@ export default function Assembly() {
   const [lastSaved, setLastSaved] = useState<string>("");
   const [calibrationDialogOpen, setCalibrationDialogOpen] = useState(false);
   const [unsavedChangesDialogOpen, setUnsavedChangesDialogOpen] = useState(false);
-  const [pendingPath, setPendingPath] = useState<string | null>(null);
-  const hasChangesRef = useRef(false);
 
   const handleConfigChange = (
     component: keyof AssemblyConfig,
@@ -78,14 +82,14 @@ export default function Assembly() {
     setConfig((prev) => ({ ...prev, [component]: value }));
   };
 
-  // Track unsaved changes
+  // Track unsaved changes and update context
   useEffect(() => {
     const configChanged =
       config.pipet !== savedConfig.pipet ||
       config.cap !== savedConfig.cap ||
       config.bulb !== savedConfig.bulb;
 
-    hasChangesRef.current = configChanged;
+    setHasUnsavedChanges(configChanged);
 
     // Add beforeunload listener for browser close/refresh
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
@@ -97,52 +101,54 @@ export default function Assembly() {
 
     window.addEventListener("beforeunload", handleBeforeUnload);
     return () => window.removeEventListener("beforeunload", handleBeforeUnload);
-  }, [config, savedConfig]);
+  }, [config, savedConfig, setHasUnsavedChanges]);
 
-  // Expose unsaved changes state and navigation handlers to Sidebar
+  // Watch for pending navigation and show dialog
   useEffect(() => {
-    (window as any).__assemblyHasUnsavedChanges = hasChangesRef.current;
-    (window as any).__assemblyShowUnsavedDialog = () => {
+    if (pendingNavigation && hasUnsavedChanges) {
       setUnsavedChangesDialogOpen(true);
-    };
-    (window as any).__assemblySetPendingPath = (path: string) => {
-      setPendingPath(path);
-    };
-  }, [hasChangesRef.current, unsavedChangesDialogOpen]);
+    }
+  }, [pendingNavigation, hasUnsavedChanges]);
 
-  // Update hasChangesRef whenever config changes
+  // Set up save and navigate callback
   useEffect(() => {
-    const configChanged =
-      config.pipet !== savedConfig.pipet ||
-      config.cap !== savedConfig.cap ||
-      config.bulb !== savedConfig.bulb;
-    hasChangesRef.current = configChanged;
-  }, [config, savedConfig]);
+    setOnSaveAndNavigate(() => {
+      handleSave();
+      if (pendingNavigation) {
+        navigate(pendingNavigation);
+      }
+      setPendingNavigation(null);
+    });
+  }, [pendingNavigation, navigate, setOnSaveAndNavigate]);
 
-  const handleSave = () => {
+  const handleSave = useCallback(() => {
     setSavedConfig(config);
     setLastSaved(new Date().toLocaleTimeString());
+    setHasUnsavedChanges(false);
     console.log("Assembly configuration saved:", config);
-  };
+  }, [config, setHasUnsavedChanges]);
 
   const handleReset = () => {
     setConfig(initialConfig);
   };
 
-  const handleConfirmLeaveWithoutSaving = useCallback(() => {
+  const handleConfirmLeaveWithoutSaving = () => {
     setUnsavedChangesDialogOpen(false);
-    if (pendingPath) {
-      navigate(pendingPath);
+    if (pendingNavigation) {
+      setHasUnsavedChanges(false);
+      navigate(pendingNavigation);
+      setPendingNavigation(null);
     }
-  }, [pendingPath, navigate]);
+  };
 
-  const handleSaveAndLeave = useCallback(() => {
+  const handleSaveAndLeave = () => {
     handleSave();
     setUnsavedChangesDialogOpen(false);
-    if (pendingPath) {
-      navigate(pendingPath);
+    if (pendingNavigation) {
+      navigate(pendingNavigation);
+      setPendingNavigation(null);
     }
-  }, [pendingPath, navigate]);
+  };
 
   const getOptionLabel = (
     type: "pipets" | "caps" | "bulbs",
