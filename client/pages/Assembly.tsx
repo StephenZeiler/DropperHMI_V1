@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import AppLayout from "@/components/AppLayout";
 import CalibrationDialog from "@/components/CalibrationDialog";
+import { useUnsavedChanges } from "@/context/UnsavedChangesContext";
 import { Save, RotateCcw, Zap, AlertTriangle } from "lucide-react";
 import {
   Dialog,
