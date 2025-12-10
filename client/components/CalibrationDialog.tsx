@@ -122,19 +122,19 @@ export default function CalibrationDialog({
           {/* Right Column - Sample & Actions */}
           <div className="col-span-1 space-y-4 flex flex-col">
             {/* Sample Section */}
-            <div className="space-y-4 p-4 bg-secondary/30 rounded border border-border">
+            <div className="space-y-5 p-4 bg-secondary/30 rounded border border-border">
               <h3 className="text-base font-semibold text-foreground">
                 Test Calibration
               </h3>
-              <div className="space-y-3">
+              <div className="space-y-4 flex flex-col">
                 <div>
-                  <label className="text-base font-semibold text-foreground block mb-2">
+                  <label className="text-base font-semibold text-foreground block mb-3">
                     Number of Droppers
                   </label>
                   <select
                     value={dropperCount}
                     onChange={(e) => setDropperCount(parseInt(e.target.value))}
-                    className="w-full px-3 py-3 bg-input border border-border rounded text-foreground text-base focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="w-full px-4 py-4 bg-input border border-border rounded text-foreground text-lg font-semibold focus:outline-none focus:ring-2 focus:ring-primary"
                   >
                     {DROPPER_PRESET_VALUES.map((val) => (
                       <option key={val} value={val}>
@@ -145,9 +145,9 @@ export default function CalibrationDialog({
                 </div>
                 <button
                   onClick={handleSample}
-                  className="w-full px-4 py-3 bg-yellow-500 text-black rounded font-bold hover:opacity-90 transition-opacity flex items-center justify-center gap-2 text-base"
+                  className="w-full px-4 py-5 bg-yellow-500 text-black rounded font-bold hover:opacity-90 transition-opacity flex items-center justify-center gap-2 text-lg"
                 >
-                  <Droplet className="w-5 h-5" />
+                  <Droplet className="w-6 h-6" />
                   Sample
                 </button>
               </div>
