@@ -38,18 +38,16 @@ const App = () => (
   </QueryClientProvider>
 );
 
-let root: Root | null = null;
 const container = document.getElementById("root");
+if (container) {
+  // Check if root has already been created
+  const existingRoot = (container as any)._reactRootContainer;
 
-if (!root && container) {
-  root = createRoot(container);
-}
-
-if (root) {
-  root.render(<App />);
-}
-
-// Handle HMR updates
-if (import.meta.hot) {
-  import.meta.hot.accept();
+  if (existingRoot) {
+    // HMR update: use existing root
+    existingRoot.render(<App />);
+  } else {
+    // Initial render: create new root
+    createRoot(container).render(<App />);
+  }
 }
