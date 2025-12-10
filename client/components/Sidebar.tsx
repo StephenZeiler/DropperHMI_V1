@@ -1,4 +1,4 @@
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Activity, Cpu, Wifi, Zap, AlertTriangle } from "lucide-react";
 
 const navItems = [
@@ -11,6 +11,25 @@ const navItems = [
 
 export default function Sidebar() {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleNavClick = (path: string) => {
+    // Check if Assembly page has unsaved changes
+    if (location.pathname === "/assembly") {
+      const hasUnsavedChanges = (window as any).__assemblyHasUnsavedChanges;
+      const showDialog = (window as any).__assemblyShowUnsavedDialog;
+
+      if (hasUnsavedChanges && showDialog) {
+        // Set the pending path and show the dialog
+        (window as any).__assemblySetPendingPath(path);
+        showDialog();
+        return;
+      }
+    }
+
+    // Navigate normally if no unsaved changes
+    navigate(path);
+  };
 
   return (
     <aside className="w-48 bg-secondary border-r border-border flex flex-col">
@@ -34,9 +53,9 @@ export default function Sidebar() {
           const isActive = location.pathname === item.path;
 
           return (
-            <Link
+            <button
               key={item.path}
-              to={item.path}
+              onClick={() => handleNavClick(item.path)}
               className={`w-full px-3 py-2.5 rounded flex items-center gap-2 transition-colors text-sm font-medium ${
                 isActive
                   ? "bg-primary text-primary-foreground"
@@ -45,7 +64,7 @@ export default function Sidebar() {
             >
               <Icon className="w-4 h-4" />
               <span>{item.label}</span>
-            </Link>
+            </button>
           );
         })}
       </nav>
