@@ -1,7 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import AppLayout from "@/components/AppLayout";
 import CalibrationDialog from "@/components/CalibrationDialog";
-import { Save, RotateCcw, Zap } from "lucide-react";
+import { Save, RotateCcw, Zap, AlertTriangle } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+  DialogDescription,
+} from "@/components/ui/dialog";
 
 interface AssemblyConfig {
   pipet: string;
