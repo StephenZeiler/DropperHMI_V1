@@ -98,19 +98,16 @@ export default function Assembly() {
     return () => window.removeEventListener("beforeunload", handleBeforeUnload);
   }, [config, savedConfig]);
 
-  // Intercept navigation when user tries to leave
+  // Expose unsaved changes state to Sidebar
   useEffect(() => {
-    const handleNavigationAttempt = () => {
-      if (hasChangesRef.current && !unsavedChangesDialogOpen) {
-        setUnsavedChangesDialogOpen(true);
-        return false;
-      }
-      return true;
+    (window as any).__assemblyHasUnsavedChanges = hasChangesRef.current;
+    (window as any).__assemblyShowUnsavedDialog = () => {
+      setUnsavedChangesDialogOpen(true);
     };
-
-    // Store the handler globally so sidebar links can check it
-    (window as any).__assemblyUnsavedChanges = handleNavigationAttempt;
-  }, [unsavedChangesDialogOpen]);
+    (window as any).__assemblySetPendingPath = (path: string) => {
+      setPendingPath(path);
+    };
+  }, []);
 
   const handleSave = () => {
     setSavedConfig(config);
