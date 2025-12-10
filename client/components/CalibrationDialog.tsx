@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
-import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
 import { RotateCcw, Save, Plus, Minus, Droplet } from "lucide-react";
 
@@ -23,16 +22,6 @@ export default function CalibrationDialog({
 }: CalibrationDialogProps) {
   const [calibration, setCalibration] = useState(DEFAULT_CALIBRATION);
   const [dropperCount, setDropperCount] = useState(1);
-
-  const handleSliderChange = (
-    axis: keyof typeof DEFAULT_CALIBRATION,
-    value: number[]
-  ) => {
-    setCalibration((prev) => ({
-      ...prev,
-      [axis]: value[0],
-    }));
-  };
 
   const handleIncrement = (axis: keyof typeof DEFAULT_CALIBRATION) => {
     setCalibration((prev) => ({
@@ -66,44 +55,33 @@ export default function CalibrationDialog({
     // TODO: Send command to Teensy when backend is set up
   };
 
-  const renderSliderControl = (
+  const renderNumberControl = (
     label: string,
     axis: keyof typeof DEFAULT_CALIBRATION,
     value: number
   ) => (
-    <div className="space-y-3">
-      <div className="flex justify-between items-center">
-        <label className="text-sm font-semibold text-foreground">
-          {label}
-        </label>
-        <span className="text-lg font-mono text-primary font-bold">
-          {value} mm
-        </span>
-      </div>
-      <Slider
-        min={0}
-        max={100}
-        step={1}
-        value={[value]}
-        onValueChange={(v) => handleSliderChange(axis, v)}
-        className="w-full"
-      />
-      <div className="flex gap-2">
+    <div className="space-y-4 p-4 bg-secondary/30 rounded border border-border">
+      <label className="text-base font-semibold text-foreground">
+        {label}
+      </label>
+      <div className="flex items-center justify-center gap-6">
         <button
           onClick={() => handleDecrement(axis)}
-          className="flex-1 px-3 py-2 bg-secondary border border-border rounded font-semibold hover:bg-secondary/80 transition-colors flex items-center justify-center gap-2"
+          className="px-6 py-4 bg-secondary border border-border rounded font-bold hover:bg-secondary/80 transition-colors flex items-center justify-center gap-2 text-lg"
           title="Decrease by 1mm"
         >
-          <Minus className="w-4 h-4" />
-          <span className="text-xs">-1mm</span>
+          <Minus className="w-6 h-6" />
         </button>
+        <span className="text-5xl font-bold text-primary font-mono w-32 text-center">
+          {value}
+        </span>
+        <span className="text-2xl font-semibold text-foreground">mm</span>
         <button
           onClick={() => handleIncrement(axis)}
-          className="flex-1 px-3 py-2 bg-secondary border border-border rounded font-semibold hover:bg-secondary/80 transition-colors flex items-center justify-center gap-2"
+          className="px-6 py-4 bg-secondary border border-border rounded font-bold hover:bg-secondary/80 transition-colors flex items-center justify-center gap-2 text-lg"
           title="Increase by 1mm"
         >
-          <Plus className="w-4 h-4" />
-          <span className="text-xs">+1mm</span>
+          <Plus className="w-6 h-6" />
         </button>
       </div>
     </div>
@@ -111,46 +89,46 @@ export default function CalibrationDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-w-5xl w-[95vw]">
         <DialogHeader>
-          <DialogTitle className="text-xl">Machine Calibration</DialogTitle>
+          <DialogTitle className="text-2xl">Machine Calibration</DialogTitle>
         </DialogHeader>
 
-        <div className="space-y-8 py-4">
+        <div className="space-y-6 py-4">
           {/* Pipet RAM Calibration */}
-          {renderSliderControl(
+          {renderNumberControl(
             "Pipet RAM Distance Travel in Millimeter",
             "xAxis",
             calibration.xAxis
           )}
 
           {/* Cap RAM Calibration */}
-          {renderSliderControl(
+          {renderNumberControl(
             "Cap RAM Distance Travel in Millimeter",
             "yAxis",
             calibration.yAxis
           )}
 
           {/* Bulb RAM Calibration */}
-          {renderSliderControl(
+          {renderNumberControl(
             "Bulb RAM Distance Travel in Millimeter",
             "zAxis",
             calibration.zAxis
           )}
 
           {/* Sample Section */}
-          <div className="space-y-3 border-t border-border pt-6">
-            <h3 className="text-sm font-semibold text-foreground">
+          <div className="space-y-4 p-4 bg-secondary/30 rounded border border-border">
+            <h3 className="text-base font-semibold text-foreground">
               Test Calibration
             </h3>
-            <div className="space-y-2">
-              <label className="text-sm font-semibold text-foreground">
+            <div className="space-y-3">
+              <label className="text-base font-semibold text-foreground">
                 Number of Droppers
               </label>
               <select
                 value={dropperCount}
                 onChange={(e) => setDropperCount(parseInt(e.target.value))}
-                className="w-full px-3 py-2 bg-input border border-border rounded text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full px-4 py-3 bg-input border border-border rounded text-foreground text-lg focus:outline-none focus:ring-2 focus:ring-primary"
               >
                 {DROPPER_PRESET_VALUES.map((val) => (
                   <option key={val} value={val}>
@@ -161,28 +139,28 @@ export default function CalibrationDialog({
             </div>
             <button
               onClick={handleSample}
-              className="w-full px-4 py-3 bg-success text-white rounded font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
+              className="w-full px-6 py-4 bg-success text-white rounded font-bold hover:opacity-90 transition-opacity flex items-center justify-center gap-2 text-lg"
             >
-              <Droplet className="w-4 h-4" />
+              <Droplet className="w-6 h-6" />
               Sample
             </button>
           </div>
         </div>
 
-        <DialogFooter className="gap-2 sm:gap-2 flex-row">
+        <DialogFooter className="gap-3 sm:gap-3 flex-row pt-4">
           <button
             onClick={handleReset}
-            className="px-4 py-2 bg-secondary border border-border rounded font-semibold hover:bg-secondary/80 transition-colors flex items-center justify-center gap-2"
+            className="px-6 py-3 bg-secondary border border-border rounded font-bold hover:bg-secondary/80 transition-colors flex items-center justify-center gap-2 text-base"
             title="Reset to defaults"
           >
-            <RotateCcw className="w-4 h-4" />
+            <RotateCcw className="w-5 h-5" />
             Reset to Default
           </button>
           <button
             onClick={handleSave}
-            className="px-4 py-2 bg-primary text-primary-foreground rounded font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
+            className="px-6 py-3 bg-primary text-primary-foreground rounded font-bold hover:opacity-90 transition-opacity flex items-center justify-center gap-2 text-base"
           >
-            <Save className="w-4 h-4" />
+            <Save className="w-5 h-5" />
             Save
           </button>
         </DialogFooter>
