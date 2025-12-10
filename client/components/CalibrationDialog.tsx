@@ -49,11 +49,11 @@ export default function CalibrationDialog({
         </DialogHeader>
 
         <div className="space-y-6 py-4">
-          {/* X-Axis Calibration */}
+          {/* Pipet RAM Calibration */}
           <div className="space-y-2">
             <div className="flex justify-between items-center">
               <label className="text-sm font-semibold text-foreground">
-                X-Axis Travel
+                Pipet RAM Distance Travel in Millimeter
               </label>
               <span className="text-sm font-mono text-primary">
                 {calibration.xAxis} mm
@@ -69,11 +69,11 @@ export default function CalibrationDialog({
             />
           </div>
 
-          {/* Y-Axis Calibration */}
+          {/* Cap RAM Calibration */}
           <div className="space-y-2">
             <div className="flex justify-between items-center">
               <label className="text-sm font-semibold text-foreground">
-                Y-Axis Travel
+                Cap RAM Distance Travel in Millimeter
               </label>
               <span className="text-sm font-mono text-primary">
                 {calibration.yAxis} mm
@@ -89,11 +89,11 @@ export default function CalibrationDialog({
             />
           </div>
 
-          {/* Z-Axis Calibration */}
+          {/* Bulb RAM Calibration */}
           <div className="space-y-2">
             <div className="flex justify-between items-center">
               <label className="text-sm font-semibold text-foreground">
-                Z-Axis Travel
+                Bulb RAM Distance Travel in Millimeter
               </label>
               <span className="text-sm font-mono text-primary">
                 {calibration.zAxis} mm
