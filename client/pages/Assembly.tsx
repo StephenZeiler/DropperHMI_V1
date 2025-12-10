@@ -285,6 +285,36 @@ export default function Assembly() {
         open={calibrationDialogOpen}
         onOpenChange={setCalibrationDialogOpen}
       />
+
+      {/* Unsaved Changes Dialog */}
+      <Dialog open={unsavedChangesDialogOpen} onOpenChange={setUnsavedChangesDialogOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <div className="flex items-center gap-3">
+              <AlertTriangle className="w-6 h-6 text-warning" />
+              <DialogTitle>Unsaved Changes</DialogTitle>
+            </div>
+            <DialogDescription className="mt-2">
+              You have made changes to the assembly configuration that haven't been saved.
+              Would you like to save them before leaving?
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="gap-3 flex-row">
+            <button
+              onClick={handleConfirmLeaveWithoutSaving}
+              className="px-4 py-2 bg-secondary border border-border rounded font-semibold hover:bg-secondary/80 transition-colors"
+            >
+              Don't Save
+            </button>
+            <button
+              onClick={handleSaveAndLeave}
+              className="px-4 py-2 bg-primary text-primary-foreground rounded font-semibold hover:opacity-90 transition-opacity"
+            >
+              Save and Leave
+            </button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </AppLayout>
   );
 }
