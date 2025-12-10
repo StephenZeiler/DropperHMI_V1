@@ -209,6 +209,13 @@ export default function Assembly() {
               Save Configuration
             </button>
             <button
+              onClick={() => setCalibrationDialogOpen(true)}
+              className="px-4 py-3 bg-secondary border border-border rounded font-semibold hover:bg-secondary/80 transition-colors flex items-center justify-center gap-2"
+              title="Calibrate machine"
+            >
+              <Zap className="w-4 h-4" />
+            </button>
+            <button
               onClick={handleReset}
               className="px-4 py-3 bg-secondary border border-border rounded font-semibold hover:bg-secondary/80 transition-colors flex items-center justify-center gap-2"
               title="Reset to defaults"
@@ -218,6 +225,11 @@ export default function Assembly() {
           </div>
         </div>
       </div>
+
+      <CalibrationDialog
+        open={calibrationDialogOpen}
+        onOpenChange={setCalibrationDialogOpen}
+      />
     </AppLayout>
   );
 }
