@@ -73,17 +73,50 @@ export default function Assembly() {
     setConfig((prev) => ({ ...prev, [component]: value }));
   };
 
+  // Track unsaved changes
+  useEffect(() => {
+    const configChanged =
+      config.pipet !== savedConfig.pipet ||
+      config.cap !== savedConfig.cap ||
+      config.bulb !== savedConfig.bulb;
+
+    hasChanges.current = configChanged;
+
+    // Add beforeunload listener
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (configChanged) {
+        e.preventDefault();
+        e.returnValue = "";
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+  }, [config, savedConfig]);
+
   const handleSave = () => {
+    setSavedConfig(config);
     setLastSaved(new Date().toLocaleTimeString());
     console.log("Assembly configuration saved:", config);
   };
 
   const handleReset = () => {
-    setConfig({
-      pipet: ASSEMBLY_OPTIONS.pipets[0].id,
-      cap: ASSEMBLY_OPTIONS.caps[0].id,
-      bulb: ASSEMBLY_OPTIONS.bulbs[0].id,
-    });
+    setConfig(initialConfig);
+  };
+
+  const handleConfirmLeaveWithoutSaving = () => {
+    setUnsavedChangesDialogOpen(false);
+    if (pendingNavigation) {
+      pendingNavigation();
+    }
+  };
+
+  const handleSaveAndLeave = () => {
+    handleSave();
+    setUnsavedChangesDialogOpen(false);
+    if (pendingNavigation) {
+      pendingNavigation();
+    }
   };
 
   const getOptionLabel = (
