@@ -89,7 +89,7 @@ export default function CalibrationDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-5xl w-[95vw]">
+      <DialogContent className="max-w-2xl w-[90vw] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl">Machine Calibration</DialogTitle>
         </DialogHeader>
