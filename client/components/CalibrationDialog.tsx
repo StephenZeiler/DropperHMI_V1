@@ -121,33 +121,35 @@ export default function CalibrationDialog({
             <h3 className="text-base font-semibold text-foreground">
               Test Calibration
             </h3>
-            <div className="space-y-3">
-              <label className="text-base font-semibold text-foreground">
-                Number of Droppers
-              </label>
-              <select
-                value={dropperCount}
-                onChange={(e) => setDropperCount(parseInt(e.target.value))}
-                className="w-full px-4 py-3 bg-input border border-border rounded text-foreground text-lg focus:outline-none focus:ring-2 focus:ring-primary"
+            <div className="flex items-end gap-3">
+              <div className="flex-1">
+                <label className="text-base font-semibold text-foreground block mb-2">
+                  Number of Droppers
+                </label>
+                <select
+                  value={dropperCount}
+                  onChange={(e) => setDropperCount(parseInt(e.target.value))}
+                  className="w-full px-3 py-3 bg-input border border-border rounded text-foreground text-base focus:outline-none focus:ring-2 focus:ring-primary"
+                >
+                  {DROPPER_PRESET_VALUES.map((val) => (
+                    <option key={val} value={val}>
+                      {val} dropper{val !== 1 ? "s" : ""}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <button
+                onClick={handleSample}
+                className="px-6 py-3 bg-yellow-500 text-black rounded font-bold hover:opacity-90 transition-opacity flex items-center justify-center gap-2 text-base"
               >
-                {DROPPER_PRESET_VALUES.map((val) => (
-                  <option key={val} value={val}>
-                    {val} dropper{val !== 1 ? "s" : ""}
-                  </option>
-                ))}
-              </select>
+                <Droplet className="w-5 h-5" />
+                Sample
+              </button>
             </div>
-            <button
-              onClick={handleSample}
-              className="px-6 py-4 bg-yellow-500 text-black rounded font-bold hover:opacity-90 transition-opacity flex items-center justify-center gap-2 text-lg mx-auto"
-            >
-              <Droplet className="w-6 h-6" />
-              Sample
-            </button>
           </div>
         </div>
 
-        <DialogFooter className="gap-3 sm:gap-3 flex-row pt-4">
+        <div className="flex gap-3 pt-4">
           <button
             onClick={handleReset}
             className="px-6 py-3 bg-secondary border border-border rounded font-bold hover:bg-secondary/80 transition-colors flex items-center justify-center gap-2 text-base"
@@ -163,7 +165,7 @@ export default function CalibrationDialog({
             <Save className="w-5 h-5" />
             Save and Exit
           </button>
-        </DialogFooter>
+        </div>
       </DialogContent>
     </Dialog>
   );
