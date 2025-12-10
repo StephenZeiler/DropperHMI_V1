@@ -84,9 +84,9 @@ export default function Assembly() {
       config.cap !== savedConfig.cap ||
       config.bulb !== savedConfig.bulb;
 
-    hasChanges.current = configChanged;
+    hasChangesRef.current = configChanged;
 
-    // Add beforeunload listener
+    // Add beforeunload listener for browser close/refresh
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
       if (configChanged) {
         e.preventDefault();
@@ -97,6 +97,20 @@ export default function Assembly() {
     window.addEventListener("beforeunload", handleBeforeUnload);
     return () => window.removeEventListener("beforeunload", handleBeforeUnload);
   }, [config, savedConfig]);
+
+  // Intercept navigation when user tries to leave
+  useEffect(() => {
+    const handleNavigationAttempt = () => {
+      if (hasChangesRef.current && !unsavedChangesDialogOpen) {
+        setUnsavedChangesDialogOpen(true);
+        return false;
+      }
+      return true;
+    };
+
+    // Store the handler globally so sidebar links can check it
+    (window as any).__assemblyUnsavedChanges = handleNavigationAttempt;
+  }, [unsavedChangesDialogOpen]);
 
   const handleSave = () => {
     setSavedConfig(config);
