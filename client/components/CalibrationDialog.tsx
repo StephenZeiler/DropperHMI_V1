@@ -154,10 +154,10 @@ export default function CalibrationDialog({
             </div>
 
             {/* Action Buttons */}
-            <div className="flex flex-col gap-3 mt-auto">
+            <div className="flex flex-col gap-6 mt-auto">
               <button
                 onClick={handleReset}
-                className="px-4 py-3 bg-secondary border border-border rounded font-bold hover:bg-secondary/80 transition-colors flex items-center justify-center gap-2 text-base"
+                className="px-4 py-5 bg-secondary border border-border rounded font-bold hover:bg-secondary/80 transition-colors flex items-center justify-center gap-2 text-base"
                 title="Reset to defaults"
               >
                 <RotateCcw className="w-5 h-5" />
@@ -165,7 +165,7 @@ export default function CalibrationDialog({
               </button>
               <button
                 onClick={handleSave}
-                className="px-4 py-3 bg-primary text-primary-foreground rounded font-bold hover:opacity-90 transition-opacity flex items-center justify-center gap-2 text-base"
+                className="px-4 py-5 bg-primary text-primary-foreground rounded font-bold hover:opacity-90 transition-opacity flex items-center justify-center gap-2 text-base"
               >
                 <Save className="w-5 h-5" />
                 Save and Exit
