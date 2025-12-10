@@ -122,20 +122,20 @@ export default function Assembly() {
     setConfig(initialConfig);
   };
 
-  const handleConfirmLeaveWithoutSaving = () => {
+  const handleConfirmLeaveWithoutSaving = useCallback(() => {
     setUnsavedChangesDialogOpen(false);
-    if (pendingNavigation) {
-      pendingNavigation();
+    if (pendingPath) {
+      navigate(pendingPath);
     }
-  };
+  }, [pendingPath, navigate]);
 
-  const handleSaveAndLeave = () => {
+  const handleSaveAndLeave = useCallback(() => {
     handleSave();
     setUnsavedChangesDialogOpen(false);
-    if (pendingNavigation) {
-      pendingNavigation();
+    if (pendingPath) {
+      navigate(pendingPath);
     }
-  };
+  }, [pendingPath, navigate]);
 
   const getOptionLabel = (
     type: "pipets" | "caps" | "bulbs",
