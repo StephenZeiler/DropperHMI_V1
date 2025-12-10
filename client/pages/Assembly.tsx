@@ -93,111 +93,127 @@ export default function Assembly() {
 
       {/* Main Content */}
       <div className="flex-1 overflow-y-auto p-6">
-        <div className="max-w-2xl">
-          {/* Configuration Cards */}
-          <div className="grid grid-cols-1 gap-6 mb-8">
-            {/* Pipets Section */}
-            <div className="hmi-card">
-              <h2 className="text-sm font-semibold text-foreground mb-3">
-                Pipet Selection
-              </h2>
-              <select
-                value={config.pipet}
-                onChange={(e) => handleConfigChange("pipet", e.target.value)}
-                className="w-full px-3 py-2 bg-input border border-border rounded text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-              >
-                {ASSEMBLY_OPTIONS.pipets.map((opt) => (
-                  <option key={opt.id} value={opt.id}>
-                    {opt.label}
-                  </option>
-                ))}
-              </select>
-              <p className="text-xs text-muted-foreground mt-2">
-                {ASSEMBLY_OPTIONS.pipets.find((p) => p.id === config.pipet)
-                  ?.description}
-              </p>
+        <div className="max-w-6xl">
+          {/* Configuration Layout - Two Columns */}
+          <div className="grid grid-cols-3 gap-6 mb-8">
+            {/* Left Column - Selection Cards */}
+            <div className="col-span-2 space-y-6">
+              {/* Pipets Section */}
+              <div className="hmi-card">
+                <h2 className="text-sm font-semibold text-foreground mb-3">
+                  Pipet Selection
+                </h2>
+                <select
+                  value={config.pipet}
+                  onChange={(e) => handleConfigChange("pipet", e.target.value)}
+                  className="w-full px-3 py-2 bg-input border border-border rounded text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                >
+                  {ASSEMBLY_OPTIONS.pipets.map((opt) => (
+                    <option key={opt.id} value={opt.id}>
+                      {opt.label}
+                    </option>
+                  ))}
+                </select>
+                <p className="text-xs text-muted-foreground mt-2">
+                  {ASSEMBLY_OPTIONS.pipets.find((p) => p.id === config.pipet)
+                    ?.description}
+                </p>
+              </div>
+
+              {/* Caps Section */}
+              <div className="hmi-card">
+                <h2 className="text-sm font-semibold text-foreground mb-3">
+                  Cap Selection
+                </h2>
+                <select
+                  value={config.cap}
+                  onChange={(e) => handleConfigChange("cap", e.target.value)}
+                  className="w-full px-3 py-2 bg-input border border-border rounded text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                >
+                  {ASSEMBLY_OPTIONS.caps.map((opt) => (
+                    <option key={opt.id} value={opt.id}>
+                      {opt.label}
+                    </option>
+                  ))}
+                </select>
+                <p className="text-xs text-muted-foreground mt-2">
+                  {ASSEMBLY_OPTIONS.caps.find((c) => c.id === config.cap)
+                    ?.description}
+                </p>
+              </div>
+
+              {/* Bulbs Section */}
+              <div className="hmi-card">
+                <h2 className="text-sm font-semibold text-foreground mb-3">
+                  Bulb Selection
+                </h2>
+                <select
+                  value={config.bulb}
+                  onChange={(e) => handleConfigChange("bulb", e.target.value)}
+                  className="w-full px-3 py-2 bg-input border border-border rounded text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                >
+                  {ASSEMBLY_OPTIONS.bulbs.map((opt) => (
+                    <option key={opt.id} value={opt.id}>
+                      {opt.label}
+                    </option>
+                  ))}
+                </select>
+                <p className="text-xs text-muted-foreground mt-2">
+                  {ASSEMBLY_OPTIONS.bulbs.find((b) => b.id === config.bulb)
+                    ?.description}
+                </p>
+              </div>
             </div>
 
-            {/* Caps Section */}
-            <div className="hmi-card">
-              <h2 className="text-sm font-semibold text-foreground mb-3">
-                Cap Selection
-              </h2>
-              <select
-                value={config.cap}
-                onChange={(e) => handleConfigChange("cap", e.target.value)}
-                className="w-full px-3 py-2 bg-input border border-border rounded text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-              >
-                {ASSEMBLY_OPTIONS.caps.map((opt) => (
-                  <option key={opt.id} value={opt.id}>
-                    {opt.label}
-                  </option>
-                ))}
-              </select>
-              <p className="text-xs text-muted-foreground mt-2">
-                {ASSEMBLY_OPTIONS.caps.find((c) => c.id === config.cap)
-                  ?.description}
-              </p>
-            </div>
+            {/* Right Column - Current Configuration & Calibration */}
+            <div className="col-span-1 space-y-4">
+              {/* Current Configuration Summary */}
+              <div className="hmi-card bg-secondary/50 border-primary/50">
+                <h3 className="text-sm font-semibold text-foreground mb-3">
+                  Current Configuration
+                </h3>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Pipet:</span>
+                    <span className="text-primary">
+                      {getOptionLabel("pipets", config.pipet)}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Cap:</span>
+                    <span className="text-primary">
+                      {getOptionLabel("caps", config.cap)}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Bulb:</span>
+                    <span className="text-primary">
+                      {getOptionLabel("bulbs", config.bulb)}
+                    </span>
+                  </div>
+                </div>
+              </div>
 
-            {/* Bulbs Section */}
-            <div className="hmi-card">
-              <h2 className="text-sm font-semibold text-foreground mb-3">
-                Bulb Selection
-              </h2>
-              <select
-                value={config.bulb}
-                onChange={(e) => handleConfigChange("bulb", e.target.value)}
-                className="w-full px-3 py-2 bg-input border border-border rounded text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+              {/* Calibration Button */}
+              <button
+                onClick={() => setCalibrationDialogOpen(true)}
+                className="w-full px-4 py-3 bg-secondary border border-border rounded font-semibold hover:bg-secondary/80 transition-colors flex items-center justify-center gap-2"
+                title="Calibrate machine"
               >
-                {ASSEMBLY_OPTIONS.bulbs.map((opt) => (
-                  <option key={opt.id} value={opt.id}>
-                    {opt.label}
-                  </option>
-                ))}
-              </select>
-              <p className="text-xs text-muted-foreground mt-2">
-                {ASSEMBLY_OPTIONS.bulbs.find((b) => b.id === config.bulb)
-                  ?.description}
-              </p>
+                <Zap className="w-4 h-4" />
+                Calibration
+              </button>
+
+              {/* Last Saved Info */}
+              {lastSaved && (
+                <div className="hmi-card bg-success/20 border-success/50">
+                  <p className="text-sm text-success">
+                    ✓ Configuration saved at {lastSaved}
+                  </p>
+                </div>
+              )}
             </div>
           </div>
-
-          {/* Current Configuration Summary */}
-          <div className="hmi-card bg-secondary/50 border-primary/50 mb-6">
-            <h3 className="text-sm font-semibold text-foreground mb-3">
-              Current Configuration
-            </h3>
-            <div className="space-y-2 text-sm">
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">Pipet:</span>
-                <span className="text-primary">
-                  {getOptionLabel("pipets", config.pipet)}
-                </span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">Cap:</span>
-                <span className="text-primary">
-                  {getOptionLabel("caps", config.cap)}
-                </span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">Bulb:</span>
-                <span className="text-primary">
-                  {getOptionLabel("bulbs", config.bulb)}
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Last Saved Info */}
-          {lastSaved && (
-            <div className="hmi-card bg-success/20 border-success/50 mb-6">
-              <p className="text-sm text-success">
-                ✓ Configuration saved at {lastSaved}
-              </p>
-            </div>
-          )}
 
           {/* Action Buttons */}
           <div className="flex gap-3">
@@ -207,13 +223,6 @@ export default function Assembly() {
             >
               <Save className="w-4 h-4" />
               Save Configuration
-            </button>
-            <button
-              onClick={() => setCalibrationDialogOpen(true)}
-              className="px-4 py-3 bg-secondary border border-border rounded font-semibold hover:bg-secondary/80 transition-colors flex items-center justify-center gap-2"
-              title="Calibrate machine"
-            >
-              <Zap className="w-4 h-4" />
             </button>
             <button
               onClick={handleReset}
