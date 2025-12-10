@@ -40,14 +40,14 @@ const App = () => (
 
 const container = document.getElementById("root");
 if (container) {
-  // Check if root has already been created
-  const existingRoot = (container as any)._reactRootContainer;
-
-  if (existingRoot) {
-    // HMR update: use existing root
-    existingRoot.render(<App />);
-  } else {
-    // Initial render: create new root
+  try {
     createRoot(container).render(<App />);
+  } catch (e) {
+    // If root already exists (HMR case), this is expected
+    if ((e as Error).message?.includes("already been passed to createRoot")) {
+      // Silently ignore - the app is already running
+    } else {
+      throw e;
+    }
   }
 }
