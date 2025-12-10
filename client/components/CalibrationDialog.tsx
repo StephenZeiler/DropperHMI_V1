@@ -94,77 +94,84 @@ export default function CalibrationDialog({
           <DialogTitle className="text-2xl">Machine Calibration</DialogTitle>
         </DialogHeader>
 
-        <div className="space-y-6 py-4">
-          {/* Pipet RAM Calibration */}
-          {renderNumberControl(
-            "Pipet RAM Distance Travel in Millimeter",
-            "xAxis",
-            calibration.xAxis
-          )}
+        <div className="grid grid-cols-3 gap-6 py-4">
+          {/* Left Column - Calibration Controls */}
+          <div className="col-span-2 space-y-4">
+            {/* Pipet RAM Calibration */}
+            {renderNumberControl(
+              "Pipet RAM Distance Travel in Millimeter",
+              "xAxis",
+              calibration.xAxis
+            )}
 
-          {/* Cap RAM Calibration */}
-          {renderNumberControl(
-            "Cap RAM Distance Travel in Millimeter",
-            "yAxis",
-            calibration.yAxis
-          )}
+            {/* Cap RAM Calibration */}
+            {renderNumberControl(
+              "Cap RAM Distance Travel in Millimeter",
+              "yAxis",
+              calibration.yAxis
+            )}
 
-          {/* Bulb RAM Calibration */}
-          {renderNumberControl(
-            "Bulb RAM Distance Travel in Millimeter",
-            "zAxis",
-            calibration.zAxis
-          )}
+            {/* Bulb RAM Calibration */}
+            {renderNumberControl(
+              "Bulb RAM Distance Travel in Millimeter",
+              "zAxis",
+              calibration.zAxis
+            )}
+          </div>
 
-          {/* Sample Section */}
-          <div className="space-y-4 p-4 bg-secondary/30 rounded border border-border">
-            <h3 className="text-base font-semibold text-foreground">
-              Test Calibration
-            </h3>
-            <div className="flex items-end gap-3">
-              <div className="flex-1">
-                <label className="text-base font-semibold text-foreground block mb-2">
-                  Number of Droppers
-                </label>
-                <select
-                  value={dropperCount}
-                  onChange={(e) => setDropperCount(parseInt(e.target.value))}
-                  className="w-full px-3 py-3 bg-input border border-border rounded text-foreground text-base focus:outline-none focus:ring-2 focus:ring-primary"
+          {/* Right Column - Sample & Actions */}
+          <div className="col-span-1 space-y-4 flex flex-col">
+            {/* Sample Section */}
+            <div className="space-y-4 p-4 bg-secondary/30 rounded border border-border">
+              <h3 className="text-base font-semibold text-foreground">
+                Test Calibration
+              </h3>
+              <div className="space-y-3">
+                <div>
+                  <label className="text-base font-semibold text-foreground block mb-2">
+                    Number of Droppers
+                  </label>
+                  <select
+                    value={dropperCount}
+                    onChange={(e) => setDropperCount(parseInt(e.target.value))}
+                    className="w-full px-3 py-3 bg-input border border-border rounded text-foreground text-base focus:outline-none focus:ring-2 focus:ring-primary"
+                  >
+                    {DROPPER_PRESET_VALUES.map((val) => (
+                      <option key={val} value={val}>
+                        {val} dropper{val !== 1 ? "s" : ""}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <button
+                  onClick={handleSample}
+                  className="w-full px-4 py-3 bg-yellow-500 text-black rounded font-bold hover:opacity-90 transition-opacity flex items-center justify-center gap-2 text-base"
                 >
-                  {DROPPER_PRESET_VALUES.map((val) => (
-                    <option key={val} value={val}>
-                      {val} dropper{val !== 1 ? "s" : ""}
-                    </option>
-                  ))}
-                </select>
+                  <Droplet className="w-5 h-5" />
+                  Sample
+                </button>
               </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex flex-col gap-3 mt-auto">
               <button
-                onClick={handleSample}
-                className="px-6 py-3 bg-yellow-500 text-black rounded font-bold hover:opacity-90 transition-opacity flex items-center justify-center gap-2 text-base"
+                onClick={handleReset}
+                className="px-4 py-3 bg-secondary border border-border rounded font-bold hover:bg-secondary/80 transition-colors flex items-center justify-center gap-2 text-base"
+                title="Reset to defaults"
               >
-                <Droplet className="w-5 h-5" />
-                Sample
+                <RotateCcw className="w-5 h-5" />
+                Reset Default
+              </button>
+              <button
+                onClick={handleSave}
+                className="px-4 py-3 bg-primary text-primary-foreground rounded font-bold hover:opacity-90 transition-opacity flex items-center justify-center gap-2 text-base"
+              >
+                <Save className="w-5 h-5" />
+                Save and Exit
               </button>
             </div>
           </div>
-        </div>
-
-        <div className="flex gap-3 pt-4">
-          <button
-            onClick={handleReset}
-            className="px-6 py-3 bg-secondary border border-border rounded font-bold hover:bg-secondary/80 transition-colors flex items-center justify-center gap-2 text-base"
-            title="Reset to defaults"
-          >
-            <RotateCcw className="w-5 h-5" />
-            Reset Default
-          </button>
-          <button
-            onClick={handleSave}
-            className="flex-1 px-6 py-3 bg-primary text-primary-foreground rounded font-bold hover:opacity-90 transition-opacity flex items-center justify-center gap-2 text-base"
-          >
-            <Save className="w-5 h-5" />
-            Save and Exit
-          </button>
         </div>
       </DialogContent>
     </Dialog>
