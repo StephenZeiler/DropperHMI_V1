@@ -98,7 +98,7 @@ export default function Assembly() {
     return () => window.removeEventListener("beforeunload", handleBeforeUnload);
   }, [config, savedConfig]);
 
-  // Expose unsaved changes state to Sidebar
+  // Expose unsaved changes state and navigation handlers to Sidebar
   useEffect(() => {
     (window as any).__assemblyHasUnsavedChanges = hasChangesRef.current;
     (window as any).__assemblyShowUnsavedDialog = () => {
@@ -107,7 +107,16 @@ export default function Assembly() {
     (window as any).__assemblySetPendingPath = (path: string) => {
       setPendingPath(path);
     };
-  }, []);
+  }, [hasChangesRef.current, unsavedChangesDialogOpen]);
+
+  // Update hasChangesRef whenever config changes
+  useEffect(() => {
+    const configChanged =
+      config.pipet !== savedConfig.pipet ||
+      config.cap !== savedConfig.cap ||
+      config.bulb !== savedConfig.bulb;
+    hasChangesRef.current = configChanged;
+  }, [config, savedConfig]);
 
   const handleSave = () => {
     setSavedConfig(config);
