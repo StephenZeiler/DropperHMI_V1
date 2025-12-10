@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import AppLayout from "@/components/AppLayout";
 import CalibrationDialog from "@/components/CalibrationDialog";
 import { Save, RotateCcw, Zap, AlertTriangle } from "lucide-react";
